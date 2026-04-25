@@ -71,9 +71,24 @@ Base directory: 이 파일과 같은 디렉토리 (`skills/make-slides/`)
 | 페르소나, 특징 카드 4개 | Top-Bar + Card-Grid (4열) |
 | 데이터 표, 비교표 | Full-Width Table |
 | 기능 설명 (아이콘+텍스트) | Left-Title + Right-Feature-List |
-| KPI, 핵심 수치 | Metric Cards |
-| 시스템 구조, 흐름 | Architecture / Flow |
+| 핵심 수치 3개 강조 | Metric Cards |
+| 시스템 구조, 레이어 아키텍처 | Architecture / Flow |
 | 단계별 공개 효과 필요 | Build Effect (data-step) |
+| 기간별 추이, 카테고리 비교 (단일) | Chart — Column |
+| 두 항목 나란히 비교 (목표 vs 실적) | Chart — Grouped Column |
+| 시계열 추세 + 전망 점선 | Chart — Line |
+| 구성 비율 변화, 세그먼트 누적 | Chart — Stacked Column |
+| 점유율, 비중 (원형) | Chart — Donut |
+| 순위 비교, 랭킹 | Chart — Horizontal Bar |
+| 매출 + 성장률 이중축 | Chart — Combo (Bar+Line) |
+| 기여도 분석, P&L 브릿지 | Chart — Waterfall |
+| 분포 분석, 상관관계, 세그먼트 매핑 | Chart — Scatter/Bubble |
+| 우선순위 분류, BCG 매트릭스 | 2×2 Matrix |
+| 전환율 분석, 파이프라인 | Funnel Chart |
+| 프로젝트 로드맵, 마일스톤 추적 | Timeline / Roadmap |
+| 단계별 프로세스 흐름 (5단계 이하) | Chevron Process |
+| 핵심 KPI 6개 요약, 경영진 보고 | KPI Dashboard (6타일 2×3) |
+| 카테고리별 비중, 구성 점유율 시각화 | Treemap |
 
 ### Step 4 — template.html에 슬라이드 주입
 
