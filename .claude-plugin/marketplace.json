@@ -10,7 +10,10 @@
       "source": "./ppt-maker",
       "description": "마크다운 기획서를 브라우저에서 바로 실행되는 HTML 슬라이드로 변환하는 플러그인",
       "version": "1.0.0",
-      "author": "tommy",
+      "author": {
+        "name": "tommy",
+        "email": "jade.ok.story@gmail.com"
+      },
       "category": "productivity"
     }
   ]

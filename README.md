@@ -14,11 +14,20 @@ Claude Code 플러그인 모음입니다.
 
 ## 설치
 
-사용하려는 플러그인 폴더를 Claude Code 플러그인 디렉토리에 복사합니다.
+### OMC 마켓플레이스 (권장)
+
+[oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)가 설치되어 있다면 한 줄로 설치할 수 있습니다.
+
+Claude Code에서 실행:
+
+```
+/plugin marketplace add OKEUNSOO/tommy-marketplace
+```
+
+### 수동 설치
 
 ```bash
-git clone https://github.com/tommy/tommy-marketplace.git
-
+git clone https://github.com/OKEUNSOO/tommy-marketplace.git
 cp -r tommy-marketplace/ppt-maker ~/.claude/plugins/ppt-maker
 ```
 
