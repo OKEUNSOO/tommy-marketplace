@@ -1245,6 +1245,201 @@ display:flex;flex-direction:column;justify-content:flex-end;padding:16px
 
 ---
 
+### 16. Agenda / 목차 슬라이드
+
+상단 액센트 바 + 대제목 "Agenda" + 번호형 목차 리스트 (현재 섹션 강조).
+
+**좌표 기준**
+```
+아이템 top: 240, 328, 416, 504  (gap: 88px)
+아이템 height: 72px
+강조 아이템: background #EEF2FF, 번호 opacity 1.0
+비강조 아이템: background #F8F9FA, 번호 opacity 0.4
+```
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position: relative; width: 1280px; height: 720px; overflow: hidden; top: 0; left: 0; background-color: #FFFFFF;">
+    <!-- 상단 액센트 바 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; top: 0; left: 0; width: 1280px; height: 8px; background-color: #007BFF; z-index: 1;"></div>
+    <!-- 공통 헤더 -->
+    <!-- ... -->
+    <!-- 대제목 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 64px; top: 100px; width: 320px; height: 80px; z-index: 10;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 72px; font-weight: 900; color: #333333; letter-spacing: -2px; line-height: 1;">Agenda</p>
+    </div>
+    <!-- 강조 바 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 64px; top: 196px; width: 56px; height: 6px; background-color: #007BFF; border-radius: 3px; z-index: 1;"></div>
+
+    <!-- 목차 아이템 (강조) — background #EEF2FF, 번호 opacity 1.0 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 64px; top: 240px; width: 1152px; height: 72px; background-color: #EEF2FF; border-radius: 8px; z-index: 1;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 100px; top: 240px; width: 60px; height: 72px; z-index: 10; display: flex; align-items: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 32px; font-weight: 900; color: #007BFF;">01</p>
+    </div>
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 174px; top: 258px; width: 2px; height: 36px; background-color: #D0E2FF; z-index: 2;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 196px; top: 240px; width: 980px; height: 72px; z-index: 10; display: flex; align-items: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 24px; font-weight: 700; color: #333333;">섹션 제목</p>
+    </div>
+
+    <!-- 목차 아이템 (비강조) — background #F8F9FA, 번호 opacity 0.4
+         top: 328, 416, 504 반복 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 64px; top: 328px; width: 1152px; height: 72px; background-color: #F8F9FA; border-radius: 8px; z-index: 1;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 100px; top: 328px; width: 60px; height: 72px; z-index: 10; display: flex; align-items: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 32px; font-weight: 900; color: #007BFF; opacity: 0.4;">02</p>
+    </div>
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 174px; top: 346px; width: 2px; height: 36px; background-color: #E0E0E0; z-index: 2;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 196px; top: 328px; width: 980px; height: 72px; z-index: 10; display: flex; align-items: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 24px; font-weight: 500; color: #555555;">섹션 제목</p>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+### 17. Section Divider (챕터 구분)
+
+파란 배경 전면 + 섹션 번호 + 대형 제목. 챕터 전환 시 사용.
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position: relative; width: 1280px; height: 720px; overflow: hidden; top: 0; left: 0; background-color: #007BFF;">
+    <!-- 배경 장식 원 (큰) -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 780px; top: -180px; width: 700px; height: 700px; background: rgba(255,255,255,0.07); border-radius: 50%; z-index: 1;"></div>
+    <!-- 배경 장식 원 (작은) -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 920px; top: 300px; width: 400px; height: 400px; background: rgba(255,255,255,0.05); border-radius: 50%; z-index: 1;"></div>
+    <!-- 섹션 번호 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 64px; top: 200px; width: 600px; height: 44px; z-index: 10;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 500; color: rgba(255,255,255,0.7); letter-spacing: 4px;">SECTION 01</p>
+    </div>
+    <!-- 섹션 제목 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 64px; top: 256px; width: 900px; height: 200px; z-index: 10;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 80px; font-weight: 900; color: #FFFFFF; line-height: 1.15; letter-spacing: -2px;">섹션 제목<br>두 줄 가능</p>
+    </div>
+    <!-- 하단 강조 바 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 64px; top: 580px; width: 80px; height: 6px; background-color: rgba(255,255,255,0.6); border-radius: 3px; z-index: 10;"></div>
+  </div>
+</section>
+```
+
+---
+
+### 18. Thank You (마무리)
+
+중앙 대형 THANK YOU + 구분선 + 연락처 정보.
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position: relative; width: 1280px; height: 720px; overflow: hidden; top: 0; left: 0; background-color: #FFFFFF;">
+    <!-- 배경 장식 원 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: -100px; top: -100px; width: 500px; height: 500px; background: rgba(0,123,255,0.04); border-radius: 50%; z-index: 1;"></div>
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 980px; top: 400px; width: 400px; height: 400px; background: rgba(0,123,255,0.04); border-radius: 50%; z-index: 1;"></div>
+    <!-- 우측 하단 삼각 장식 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 1130px; top: 570px; width: 150px; height: 150px; background-color: #007BFF; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index: 1;"></div>
+    <!-- THANK YOU -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 0; top: 220px; width: 1280px; height: 120px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 100px; font-weight: 900; color: #007BFF; letter-spacing: -2px; text-align: center;">THANK YOU</p>
+    </div>
+    <!-- 서브 메시지 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 0; top: 348px; width: 1280px; height: 40px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 28px; font-weight: 400; color: #888888; text-align: center;">경청해 주셔서 감사합니다.</p>
+    </div>
+    <!-- 구분선 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 490px; top: 430px; width: 300px; height: 2px; background-color: #007BFF; opacity: 0.3; z-index: 1;"></div>
+    <!-- 연락처: 이메일 -->
+    <div data-object="true" data-object-type="icon"
+        style="position: absolute; left: 460px; top: 462px; width: 24px; height: 24px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-envelope" style="color: #007BFF; font-size: 16px;"></i>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 496px; top: 458px; width: 400px; height: 28px; z-index: 10;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; color: #555555;">contact@example.com</p>
+    </div>
+    <!-- 연락처: 웹사이트 -->
+    <div data-object="true" data-object-type="icon"
+        style="position: absolute; left: 460px; top: 504px; width: 24px; height: 24px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-globe" style="color: #007BFF; font-size: 16px;"></i>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 496px; top: 500px; width: 400px; height: 28px; z-index: 10;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; color: #555555;">www.yourwebsite.com</p>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+### 19. Quote (인용구)
+
+배경 따옴표 장식 + 중앙 인용구 텍스트 + 구분선 + 출처.
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position: relative; width: 1280px; height: 720px; overflow: hidden; top: 0; left: 0; background-color: #F8F9FA;">
+    <!-- 배경 왼쪽 큰 따옴표 장식 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 48px; top: 60px; width: 200px; height: 200px; z-index: 1;">
+        <p style="font-family: Georgia, serif; font-size: 260px; font-weight: 900; color: #007BFF; opacity: 0.1; line-height: 0.8;">"</p>
+    </div>
+    <!-- 배경 오른쪽 큰 따옴표 장식 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 1040px; top: 380px; width: 200px; height: 200px; z-index: 1;">
+        <p style="font-family: Georgia, serif; font-size: 260px; font-weight: 900; color: #007BFF; opacity: 0.1; line-height: 0.8;">"</p>
+    </div>
+    <!-- 따옴표 아이콘 -->
+    <div data-object="true" data-object-type="icon"
+        style="position: absolute; left: 560px; top: 148px; width: 60px; height: 60px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-quote-left" style="color: #007BFF; font-size: 48px; opacity: 0.6;"></i>
+    </div>
+    <!-- 인용구 본문 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 140px; top: 230px; width: 1000px; height: 200px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 500; color: #333333; line-height: 1.6; text-align: center; letter-spacing: -0.5px;">
+            "인용구 내용을 여기에 입력합니다.<br>두 줄까지 권장합니다."
+        </p>
+    </div>
+    <!-- 구분선 -->
+    <div data-object="true" data-object-type="shape"
+        style="position: absolute; left: 580px; top: 458px; width: 120px; height: 3px; background-color: #007BFF; border-radius: 2px; z-index: 1;"></div>
+    <!-- 출처 이름 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 0; top: 480px; width: 1280px; height: 40px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 28px; font-weight: 700; color: #007BFF; text-align: center;">출처 이름</p>
+    </div>
+    <!-- 출처 부제 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position: absolute; left: 0; top: 530px; width: 1280px; height: 30px; z-index: 10; display: flex; align-items: center; justify-content: center;">
+        <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 400; color: #888888; text-align: center;">직책 또는 소속</p>
+    </div>
+  </div>
+</section>
+```
+
+---
+
 ## 색상 팔레트
 
 | 역할 | 값 |

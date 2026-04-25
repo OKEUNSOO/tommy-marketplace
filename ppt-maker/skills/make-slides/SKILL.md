@@ -89,6 +89,10 @@ Base directory: 이 파일과 같은 디렉토리 (`skills/make-slides/`)
 | 단계별 프로세스 흐름 (5단계 이하) | Chevron Process |
 | 핵심 KPI 6개 요약, 경영진 보고 | KPI Dashboard (6타일 2×3) |
 | 카테고리별 비중, 구성 점유율 시각화 | Treemap |
+| 발표 목차, 섹션 안내 | Agenda |
+| 챕터 전환, 파트 구분 | Section Divider |
+| 발표 마무리, 연락처 안내 | Thank You |
+| 명언, 핵심 메시지 강조 | Quote |
 
 ### Step 4 — template.html에 슬라이드 주입
 
