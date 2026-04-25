@@ -1,0 +1,15 @@
+{
+  "name": "ppt-maker",
+  "description": "마크다운 기획서를 키보드 네비게이션·PDF 내보내기가 내장된 HTML 슬라이드로 변환",
+  "version": "1.0.0",
+  "author": {
+    "name": "tommy"
+  },
+  "skills": [
+    {
+      "name": "make-slides",
+      "source": "./skills/make-slides",
+      "description": "마크다운 기획서를 1280×720 캔버스 기반 HTML 슬라이드로 변환. 키보드 네비게이션·PDF 내보내기 내장"
+    }
+  ]
+}

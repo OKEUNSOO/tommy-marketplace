@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PRESENTATION_TITLE}}</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    /* ═══════════════════════════════════════
+      CSS VARIABLES
+    ═══════════════════════════════════════ */
+    :root {
+      --bg-stage: #E8E6DF;
+      --bg-slide: #FFFFFF;
+      --bg-card: #F8F7F5;
+      --text-primary: #0D0D12;
+      --text-sec: #4B5563;
+      --text-muted: #9CA3AF;
+      --accent: #007BFF;
+      --accent-mid: #3B9BFF;
+      --accent-light: #EEF2FF;
+      --accent-soft: #D0E2FF;
+      --border: #E5E7EB;
+      --border-strong: #D1D5DB;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, .08), 0 1px 4px rgba(0, 0, 0, .04);
+    }
+
+    /* ═══════════════════════════════════════
+      RESET & BASE
+    ═══════════════════════════════════════ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-stage);
+      font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    /* ═══════════════════════════════════════
+      STAGE
+    ═══════════════════════════════════════ */
+    .stage {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .stage::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.13) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════════════
+      DECK
+    ═══════════════════════════════════════ */
+    .deck {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      transform-origin: center center;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .18), 0 4px 20px rgba(0, 0, 0, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════
+      SLIDES
+    ═══════════════════════════════════════ */
+    .slide {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--bg-slide);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.fade-mode {
+      transition: opacity 500ms ease;
+    }
+
+    .slide.slide-mode {
+      transition: transform 450ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 450ms ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+      transform: translateX(0) !important;
+    }
+
+    .slide-num {
+      display: none;
+    }
+
+    /* ═══════════════════════════════════════
+      SLIDE CONTAINER — 절대좌표 캔버스
+    ═══════════════════════════════════════ */
+    .slide-container {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+    }
+
+    .slide-container p {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ═══════════════════════════════════════
+      BUILD EFFECTS — data-step
+    ═══════════════════════════════════════ */
+    [data-step] {
+      --delay: 0s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .slide.active [data-step] {
+      transition:
+        opacity 0.5s var(--delay) cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.5s var(--delay) cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slide:not(.active) [data-step] {
+      transition: none;
+    }
+
+    [data-step].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════ */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.06);
+      z-index: 200;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-mid));
+      width: 0%;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════
+      CONTROLS
+    ═══════════════════════════════════════ */
+    .controls {
+      position: fixed;
+      bottom: 26px;
+      right: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 200;
+    }
+
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(8px);
+    }
+
+    .ctrl-btn:hover:not(:disabled) {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.28);
+    }
+
+    .ctrl-btn:disabled {
+      opacity: 0.32;
+      cursor: not-allowed;
+    }
+
+    .slide-counter {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-sec);
+      font-variant-numeric: tabular-nums;
+      min-width: 58px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mode-pill {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mode-pill.fade-active {
+      color: var(--accent);
+      border-color: var(--accent-soft);
+      background: var(--accent-light);
+    }
+
+    /* ═══════════════════════════════════════
+      HELP TEXT
+    ═══════════════════════════════════════ */
+    .help {
+      position: fixed;
+      bottom: 26px;
+      left: 28px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-muted);
+      z-index: 200;
+      line-height: 1.7;
+    }
+
+    .help kbd {
+      font-family: monospace;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-size: 14px;
+      color: var(--text-sec);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ═══════════════════════════════════════
+      DOT NAV
+    ═══════════════════════════════════════ */
+    .dot-nav {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 200;
+    }
+
+    .dot-nav-item {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border-strong);
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+
+    .dot-nav-item.active {
+      background: var(--accent);
+      transform: scale(1.5);
+    }
+
+    /* ═══════════════════════════════════════
+      PRINT / PDF EXPORT
+    ═══════════════════════════════════════ */
+    @media print {
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: 1280px !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .progress-bar,
+      .controls,
+      .dot-nav,
+      .help,
+      #announcer {
+        display: none !important;
+      }
+
+      .stage {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        width: 1280px !important;
+        height: auto !important;
+        display: block !important;
+        overflow: visible !important;
+      }
+
+      .stage::before {
+        display: none;
+      }
+
+      .deck {
+        width: 1280px !important;
+        height: auto !important;
+        display: block !important;
+        transform: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .slide {
+        position: relative !important;
+        width: 1280px !important;
+        height: 720px !important;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        break-after: page !important;
+        page-break-after: always !important;
+        top: auto !important;
+        left: auto !important;
+        inset: auto !important;
+        transform: none !important;
+        z-index: 1 !important;
+      }
+
+      .slide:last-child {
+        break-after: avoid !important;
+      }
+
+      [data-step] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    .print-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      height: 42px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(8px);
+    }
+
+    .print-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.28);
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="1">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+
+  <!-- ═══ STAGE ═══ -->
+  <div class="stage">
+    <div class="deck" id="deck">
+
+      <!-- ═══ SLIDES_HERE ═══ -->
+
+    </div><!-- /.deck -->
+  </div><!-- /.stage -->
+
+  <!-- ═══ CONTROLS ═══ -->
+  <div class="controls">
+    <button class="ctrl-btn" id="prev-btn" aria-label="이전 슬라이드" disabled>◀</button>
+    <span class="slide-counter" id="counter">–</span>
+    <button class="ctrl-btn" id="next-btn" aria-label="다음 슬라이드">▶</button>
+    <span class="mode-pill" id="mode-pill">slide</span>
+    <button class="print-btn" onclick="window.print()" aria-label="PDF로 내보내기" title="PDF 저장 (P)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9" />
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+        <rect x="6" y="14" width="12" height="8" />
+      </svg>
+      PDF
+    </button>
+  </div>
+
+  <div class="dot-nav" id="dot-nav"></div>
+
+  <div class="help">
+    <kbd>← →</kbd> 이동 &nbsp;
+    <kbd>Space</kbd> 빌드/다음 &nbsp;
+    <kbd>T</kbd> 전환모드 &nbsp;
+    <kbd>F</kbd> 전체화면 &nbsp;
+    <kbd>P</kbd> PDF저장
+  </div>
+
+  <div id="announcer" aria-live="polite" aria-atomic="true"
+    style="position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden"></div>
+
+  <script>
+    'use strict';
+
+    // ══════════════════════════════════════════
+    // SCALE — fit 1280×720 into viewport
+    // ══════════════════════════════════════════
+    const deck = document.getElementById('deck');
+
+    function updateScale() {
+      const scale = Math.min(
+        window.innerWidth / 1280,
+        window.innerHeight / 720
+      );
+      deck.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
+
+    // ══════════════════════════════════════════
+    // STATE
+    // ══════════════════════════════════════════
+    const slides = [...document.querySelectorAll('.slide')];
+    const TOTAL = slides.length;
+    let current = 0;
+    let currentStep = 0;
+    let isAnimating = false;
+    let mode = 'slide'; // 'slide' | 'fade'
+    const DURATION = 450;
+
+
+    // ══════════════════════════════════════════
+    // STEP SYSTEM
+    // ══════════════════════════════════════════
+    function getMaxStep(slide) {
+      const els = slide.querySelectorAll('[data-step]');
+      if (!els.length) return 0;
+      return Math.max(...[...els].map(el => +el.dataset.step));
+    }
+
+    function applyStep(slide, n) {
+      slide.querySelectorAll('[data-step]').forEach(el => {
+        el.classList.toggle('visible', +el.dataset.step <= n);
+      });
+      const pre = slide.querySelector('[data-step-highlights]');
+      if (pre) applyCodeHL(pre, n - 1);
+    }
+
+    function resetSteps(slide) {
+      slide.querySelectorAll('[data-step]').forEach(el => el.classList.remove('visible'));
+      const pre = slide.querySelector('[data-step-highlights]');
+      if (pre) applyCodeHL(pre, -1);
+    }
+
+
+    // ══════════════════════════════════════════
+    // CODE BLOCK — line highlight
+    // ══════════════════════════════════════════
+    function parseSpec(spec) {
+      const s = new Set();
+      if (!spec) return s;
+      spec.split(',').forEach(p => {
+        p = p.trim();
+        if (p.includes('-')) {
+          const [a, b] = p.split('-').map(Number);
+          for (let i = a; i <= b; i++) s.add(i);
+        } else s.add(Number(p));
+      });
+      return s;
+    }
+
+    function esc(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function initCode(pre) {
+      const code = pre.querySelector('code');
+      if (!code) return;
+      const lines = code.textContent.split('\n');
+      if (lines[lines.length - 1] === '') lines.pop();
+      code.innerHTML = lines.map((ln, i) =>
+        `<span class="line" data-line="${i + 1}">${esc(ln) || ' '}</span>`
+      ).join('\n');
+    }
+
+    function applyCodeHL(pre, stepIdx) {
+      const specs = (pre.dataset.stepHighlights || '').split('|').map(s => s.trim());
+      const spec = specs[stepIdx] || '';
+      const hl = parseSpec(spec);
+      pre.querySelectorAll('code .line').forEach(el => {
+        el.classList.toggle('highlighted', hl.has(+el.dataset.line));
+      });
+      pre.classList.toggle('has-hl', hl.size > 0);
+    }
+
+    document.querySelectorAll('[data-step-highlights]').forEach(initCode);
+
+
+    // ══════════════════════════════════════════
+    // TRANSITION MODE
+    // ══════════════════════════════════════════
+    function applyModeClass(slide) {
+      slide.classList.remove('fade-mode', 'slide-mode');
+      slide.classList.add(mode === 'fade' ? 'fade-mode' : 'slide-mode');
+    }
+    slides.forEach(applyModeClass);
+
+
+    // ══════════════════════════════════════════
+    // CORE — go to slide
+    // ══════════════════════════════════════════
+    function goToSlide(nextIdx, forceDir) {
+      if (isAnimating) return;
+      nextIdx = Math.max(0, Math.min(nextIdx, TOTAL - 1));
+      if (nextIdx === current) return;
+
+      isAnimating = true;
+      const from = slides[current];
+      const to = slides[nextIdx];
+      const dir = forceDir ?? (nextIdx > current ? 1 : -1);
+
+      applyModeClass(from);
+      applyModeClass(to);
+
+      if (mode === 'fade') {
+        to.style.zIndex = '2';
+        from.style.zIndex = '1';
+        to.classList.add('active');
+
+        const timer = setTimeout(fadeClean, 560);
+
+        function fadeListener(e) {
+          if (e.propertyName !== 'opacity') return;
+          clearTimeout(timer);
+          fadeClean();
+        }
+
+        from.addEventListener('transitionend', fadeListener, { once: true });
+
+        requestAnimationFrame(() => {
+          from.style.opacity = '0';
+        });
+
+        function fadeClean() {
+          from.classList.remove('active');
+          from.style.zIndex = '';
+          from.style.opacity = '';
+          to.style.zIndex = '';
+          finalize(nextIdx);
+        }
+
+      } else {
+        to.style.transition = 'none';
+        to.style.transform = `translateX(${dir > 0 ? '100%' : '-100%'})`;
+        to.classList.add('active');
+
+        to.getBoundingClientRect();
+
+        to.style.transition = '';
+
+        requestAnimationFrame(() => {
+          to.style.transform = 'translateX(0)';
+          from.style.transform = `translateX(${dir > 0 ? '-100%' : '100%'})`;
+        });
+
+        const timer = setTimeout(slideClean, DURATION + 60);
+
+        from.addEventListener('transitionend', function handler(e) {
+          if (e.propertyName !== 'transform') return;
+          clearTimeout(timer);
+          slideClean();
+        }, { once: true });
+
+        function slideClean() {
+          from.classList.remove('active');
+          from.style.transform = '';
+          to.style.transform = '';
+          finalize(nextIdx);
+        }
+      }
+    }
+
+    function finalize(nextIdx) {
+      resetSteps(slides[current]);
+      current = nextIdx;
+      currentStep = 0;
+      isAnimating = false;
+      updateUI();
+      history.pushState(null, '', `#slide-${current + 1}`);
+      document.getElementById('announcer').textContent =
+        `슬라이드 ${current + 1} / ${TOTAL}`;
+    }
+
+
+    // ══════════════════════════════════════════
+    // ADVANCE / RETREAT (step-aware)
+    // ══════════════════════════════════════════
+    function advance() {
+      if (isAnimating) return;
+      const maxStep = getMaxStep(slides[current]);
+      if (currentStep < maxStep) {
+        currentStep++;
+        applyStep(slides[current], currentStep);
+        updateUI();
+      } else {
+        goToSlide(current + 1, 1);
+      }
+    }
+
+    function retreat() {
+      if (isAnimating) return;
+      if (currentStep > 0) {
+        currentStep--;
+        applyStep(slides[current], currentStep);
+        updateUI();
+      } else {
+        goToSlide(current - 1, -1);
+      }
+    }
+
+
+    // ══════════════════════════════════════════
+    // UI UPDATE
+    // ══════════════════════════════════════════
+    function updateUI() {
+      document.getElementById('counter').textContent = `${current + 1} / ${TOTAL}`;
+
+      const pct = TOTAL > 1 ? (current / (TOTAL - 1)) * 100 : 100;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+      document.querySelector('.progress-bar').setAttribute('aria-valuenow', current + 1);
+
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      prevBtn.disabled = current === 0 && currentStep === 0;
+      nextBtn.disabled = current === TOTAL - 1 && currentStep >= getMaxStep(slides[current]);
+
+      document.querySelectorAll('.dot-nav-item').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    (function buildDotNav() {
+      const nav = document.getElementById('dot-nav');
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot-nav-item' + (i === 0 ? ' active' : '');
+        d.setAttribute('aria-label', `슬라이드 ${i + 1}로 이동`);
+        d.addEventListener('click', () => goToSlide(i, i > current ? 1 : -1));
+        nav.appendChild(d);
+      });
+    })();
+
+
+    // ══════════════════════════════════════════
+    // EVENTS: Keyboard
+    // ══════════════════════════════════════════
+    document.addEventListener('keydown', e => {
+      const tag = document.activeElement?.tagName;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
+      if (e.repeat) return;
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case ' ':
+        case 'PageDown':
+          e.preventDefault();
+          advance();
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          retreat();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(0, -1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(TOTAL - 1, 1);
+          break;
+        case 't':
+        case 'T':
+        case 'ㅅ':
+          mode = mode === 'slide' ? 'fade' : 'slide';
+          const pill = document.getElementById('mode-pill');
+          pill.textContent = mode;
+          pill.classList.toggle('fade-active', mode === 'fade');
+          slides.forEach(applyModeClass);
+          break;
+        case 'f':
+        case 'F':
+        case 'ㄹ':
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen?.();
+          } else {
+            document.exitFullscreen?.();
+          }
+          break;
+        case 'p':
+        case 'P':
+        case 'ㅔ':
+          e.preventDefault();
+          window.print();
+          break;
+      }
+    });
+
+
+    // ══════════════════════════════════════════
+    // EVENTS: Touch / Swipe
+    // ══════════════════════════════════════════
+    let txStart = 0, tyStart = 0, swiping = false;
+
+    document.querySelector('.stage').addEventListener('touchstart', e => {
+      txStart = e.touches[0].clientX;
+      tyStart = e.touches[0].clientY;
+      swiping = false;
+    }, { passive: true });
+
+    document.querySelector('.stage').addEventListener('touchmove', e => {
+      const dx = e.touches[0].clientX - txStart;
+      const dy = e.touches[0].clientY - tyStart;
+      if (Math.abs(dy) > Math.abs(dx)) { swiping = false; return; }
+      swiping = true;
+      e.preventDefault();
+    }, { passive: false });
+
+    document.querySelector('.stage').addEventListener('touchend', e => {
+      if (!swiping) return;
+      const dx = e.changedTouches[0].clientX - txStart;
+      if (Math.abs(dx) >= 50) dx < 0 ? advance() : retreat();
+      swiping = false;
+    }, { passive: true });
+
+
+    // ══════════════════════════════════════════
+    // EVENTS: Buttons
+    // ══════════════════════════════════════════
+    document.getElementById('prev-btn').addEventListener('click', retreat);
+    document.getElementById('next-btn').addEventListener('click', advance);
+
+
+    // ══════════════════════════════════════════
+    // URL HASH
+    // ══════════════════════════════════════════
+    function parseHash() {
+      const m = location.hash.match(/^#slide-(\d+)$/);
+      return m ? Math.max(0, Math.min(+m[1] - 1, TOTAL - 1)) : 0;
+    }
+
+    window.addEventListener('popstate', () => {
+      const idx = parseHash();
+      if (idx !== current && !isAnimating) {
+        goToSlide(idx, idx > current ? 1 : -1);
+      }
+    });
+
+    // ══════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════
+    (function init() {
+      document.querySelector('.progress-bar').setAttribute('aria-valuemax', TOTAL);
+      current = parseHash();
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      if (!location.hash) history.replaceState(null, '', '#slide-1');
+      updateUI();
+    })();
+  </script>
+</body>
+
+</html>
