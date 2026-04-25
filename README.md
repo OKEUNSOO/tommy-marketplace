@@ -16,12 +16,13 @@ Claude Code 플러그인 모음입니다.
 
 ### OMC 마켓플레이스 (권장)
 
-[oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)가 설치되어 있다면 한 줄로 설치할 수 있습니다.
+[oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)가 설치되어 있다면 아래 두 명령어로 설치할 수 있습니다.
 
-Claude Code에서 실행:
+Claude Code에서 순서대로 실행:
 
 ```
 /plugin marketplace add OKEUNSOO/tommy-marketplace
+/plugin install
 ```
 
 ### 수동 설치
