@@ -1440,6 +1440,250 @@ display:flex;flex-direction:column;justify-content:flex-end;padding:16px
 
 ---
 
+### 20. Executive Summary (2개 Takeaway + 결론 바)
+
+좌우 2분할 Takeaway 카드 + 하단 전체 너비 결론 바. 핵심 메시지 요약용.
+
+**좌표 기준**
+```
+카드 1: left:64,  top:172, width:556, height:370
+카드 2: left:660, top:172, width:556, height:370
+결론 바: left:64, top:574, width:1152, height:100
+카드 내 제목: top:188, height:32 (카드 left+20)
+Bullet 시작: top:234, gap:38px (카드 left+32)
+```
+
+**스타일**
+```
+카드: background:#F8F9FA, border:1px solid #E0E0E0, border-radius:10px
+카드 제목: font-size:20px, font-weight:700, color:#007BFF
+Bullet 점: width:6px, height:6px, background:#007BFF, border-radius:50%
+결론 바: background:#EEF2FF, border:1px solid #D0E2FF, border-radius:10px
+결론 아이콘: left:96, fa-check-circle, font-size:28px, #007BFF
+결론 텍스트: left:156, font-size:20px, font-weight:700, color:#007BFF
+```
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+    <!-- 공통 헤더 -->
+    <!-- 제목 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:64px;top:88px;width:800px;height:56px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;">Executive Summary</p>
+    </div>
+
+    <!-- Takeaway 1 카드 -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:64px;top:172px;width:556px;height:370px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:10px;z-index:1;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:84px;top:188px;width:516px;height:32px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">01. Takeaway 제목</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:96px;top:234px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+        <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">Bullet 항목 1</p>
+    </div>
+    <!-- top:272, top:310 반복 -->
+
+    <!-- Takeaway 2 카드 (left:660) -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:660px;top:172px;width:556px;height:370px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:10px;z-index:1;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:680px;top:188px;width:516px;height:32px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">02. Takeaway 제목</p>
+    </div>
+    <!-- Bullet top:234, 272, 310 (left+32) -->
+
+    <!-- 결론 바 -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:64px;top:574px;width:1152px;height:100px;background:#EEF2FF;border:1px solid #D0E2FF;border-radius:10px;z-index:1;"></div>
+    <div data-object="true" data-object-type="icon"
+        style="position:absolute;left:96px;top:574px;width:44px;height:100px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-check-circle" style="color:#007BFF;font-size:28px;"></i>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:156px;top:574px;width:1044px;height:100px;z-index:10;display:flex;align-items:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">결론: 핵심 결론 메시지를 여기에 작성합니다.</p>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+### 21. Three Trends (3개 균등 카드 + 아이콘)
+
+3개 균등 카드, 각 카드 상단 아이콘 원 + 제목 + Bullet 3개. 트렌드·비교·특징 나열에 활용.
+
+**좌표 기준**
+```
+카드: width:360, height:466, top:196
+카드 left: 64, 460, 856
+아이콘 원: width:80, height:80, top:228 (카드 left+140)
+제목: top:328, height:36 (카드 left+10)
+Bullet 시작: top:382, gap:36px (카드 left+24)
+```
+
+**스타일**
+```
+카드: background:#F8F9FA, border:1px solid #E0E0E0, border-radius:16px
+아이콘 원: background:#EEF2FF, border-radius:50%
+아이콘: color:#007BFF, font-size:32px
+제목: font-size:22px, font-weight:700, color:#333333, text-align:center
+Bullet 점: width:6px, height:6px, background:#007BFF, border-radius:50%
+```
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+    <!-- 공통 헤더 -->
+    <!-- 중앙 정렬 제목 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:0;top:88px;width:1280px;height:56px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;text-align:center;">슬라이드 제목</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:0;top:150px;width:1280px;height:28px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:500;color:#007BFF;text-align:center;">핵심 메시지</p>
+    </div>
+
+    <!-- 카드 1 (left:64) -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:64px;top:196px;width:360px;height:466px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:16px;z-index:1;"></div>
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:204px;top:228px;width:80px;height:80px;background:#EEF2FF;border-radius:50%;z-index:2;"></div>
+    <div data-object="true" data-object-type="icon"
+        style="position:absolute;left:204px;top:228px;width:80px;height:80px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-ICON" style="color:#007BFF;font-size:32px;"></i>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:74px;top:328px;width:340px;height:36px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:22px;font-weight:700;color:#333333;text-align:center;">카드 제목 1</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:88px;top:382px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+        <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">Bullet 항목 1</p>
+    </div>
+    <!-- top:418, top:454 반복 -->
+
+    <!-- 카드 2 (left:460) — 아이콘 원 left:600 -->
+    <!-- 카드 3 (left:856) — 아이콘 원 left:996 -->
+  </div>
+</section>
+```
+
+---
+
+### 22. Two Column Compare (AS-IS / TO-BE)
+
+좌측 AS-IS(회색) + 중앙 화살표 + 우측 TO-BE(파란 강조) 비교 레이아웃. 변화/혁신 시나리오에 활용.
+
+**좌표 기준**
+```
+AS-IS 패널: left:64,  top:192, width:524, height:490
+TO-BE 패널: left:692, top:192, width:524, height:490
+배지: top:216, height:32 (패널 left+20)
+소제목: top:264, height:44 (패널 left+20)
+구분선: top:318, height:1 (패널 left+20, width:484)
+아이템 제목: top:334, 396, 458 (패널 left+20)
+아이템 설명: top:360, 422, 484 (패널 left+20)
+중앙 화살표 원: left:607, top:383, width:66, height:66
+```
+
+**스타일**
+```
+AS-IS 패널: background:#F2F4F7, border:1px solid #D1D5DB, border-radius:12px
+AS-IS 배지: background:#D1D5DB, border-radius:6px, color:#444444
+AS-IS 구분선: background:#D1D5DB
+AS-IS 아이템 제목: font-size:17px, font-weight:700, color:#444444
+AS-IS 아이템 설명: font-size:14px, color:#777777
+
+TO-BE 패널: background:#FFFFFF, border:2px solid #007BFF, border-radius:12px, box-shadow:0 8px 24px rgba(0,123,255,0.12)
+TO-BE 배지: background:#007BFF, color:#FFFFFF
+TO-BE 구분선: background:#D0E2FF
+TO-BE 아이템 제목: font-size:17px, font-weight:700, color:#007BFF
+TO-BE 아이템 설명: font-size:14px, color:#555555
+
+화살표 원: background:#007BFF, border-radius:50%
+화살표 아이콘: fa-arrow-right, color:#FFFFFF, font-size:28px
+```
+
+```html
+<section class="slide" role="group" aria-roledescription="slide" aria-label="슬라이드 N">
+  <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+    <!-- 공통 헤더 -->
+    <!-- 제목/부제 (left 정렬) -->
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:64px;top:88px;width:900px;height:56px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;">슬라이드 제목</p>
+    </div>
+
+    <!-- AS-IS 패널 -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:64px;top:192px;width:524px;height:490px;background:#F2F4F7;border:1px solid #D1D5DB;border-radius:12px;z-index:1;"></div>
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:84px;top:216px;width:100px;height:32px;background:#D1D5DB;border-radius:6px;z-index:2;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:84px;top:216px;width:100px;height:32px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;color:#444444;letter-spacing:1px;">AS-IS</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:84px;top:264px;width:484px;height:44px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:28px;font-weight:700;color:#333333;">AS-IS 소제목</p>
+    </div>
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:84px;top:318px;width:484px;height:1px;background:#D1D5DB;z-index:2;"></div>
+    <!-- 아이템 3개: top:334/360, 396/422, 458/484 -->
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:84px;top:334px;width:484px;height:24px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#444444;">아이템 제목 1</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:84px;top:360px;width:484px;height:20px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#777777;">아이템 설명 1</p>
+    </div>
+
+    <!-- 중앙 화살표 원 -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:607px;top:383px;width:66px;height:66px;background:#007BFF;border-radius:50%;z-index:2;"></div>
+    <div data-object="true" data-object-type="icon"
+        style="position:absolute;left:607px;top:383px;width:66px;height:66px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-arrow-right" style="color:#FFFFFF;font-size:28px;"></i>
+    </div>
+
+    <!-- TO-BE 패널 -->
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:692px;top:192px;width:524px;height:490px;background:#FFFFFF;border:2px solid #007BFF;border-radius:12px;box-shadow:0 8px 24px rgba(0,123,255,0.12);z-index:1;"></div>
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:712px;top:216px;width:100px;height:32px;background:#007BFF;border-radius:6px;z-index:2;"></div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:712px;top:216px;width:100px;height:32px;z-index:10;display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;color:#FFFFFF;letter-spacing:1px;">TO-BE</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:712px;top:264px;width:484px;height:44px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:28px;font-weight:700;color:#333333;">TO-BE 소제목</p>
+    </div>
+    <div data-object="true" data-object-type="shape"
+        style="position:absolute;left:712px;top:318px;width:484px;height:1px;background:#D0E2FF;z-index:2;"></div>
+    <!-- 아이템 3개: top:334/360, 396/422, 458/484 (left:712+20=732) -->
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:712px;top:334px;width:484px;height:24px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#007BFF;">아이템 제목 1</p>
+    </div>
+    <div data-object="true" data-object-type="textbox"
+        style="position:absolute;left:712px;top:360px;width:484px;height:20px;z-index:10;">
+        <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#555555;">아이템 설명 1</p>
+    </div>
+  </div>
+</section>
+```
+
+---
+
 ## 색상 팔레트
 
 | 역할 | 값 |

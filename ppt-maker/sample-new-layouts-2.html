@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신규 레이아웃 샘플 2</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --bg-stage: #E8E6DF; --accent: #007BFF; --accent-mid: #3B9BFF;
+      --border: #E5E7EB; --text-sec: #4B5563; --text-muted: #9CA3AF;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-stage); font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
+    .stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .stage::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, rgba(0,0,0,0.13) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+    .deck { width: 1280px; height: 720px; position: relative; transform-origin: center center; box-shadow: 0 24px 80px rgba(0,0,0,.18); display: flex; align-items: center; justify-content: center; }
+    .slide { position: absolute; inset: 0; overflow: hidden; background: #fff; opacity: 0; pointer-events: none; z-index: 0; display: flex; align-items: center; justify-content: center; }
+    .slide.slide-mode { transition: transform 450ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 450ms ease; }
+    .slide.active { opacity: 1; pointer-events: auto; z-index: 1; transform: translateX(0) !important; }
+    .slide-container { position: relative; width: 1280px; height: 720px; overflow: hidden; }
+    .slide-container p { margin: 0; padding: 0; }
+    .controls { position: fixed; bottom: 26px; right: 28px; display: flex; align-items: center; gap: 12px; z-index: 200; }
+    .ctrl-btn { background: rgba(255,255,255,0.92); border: 1px solid var(--border); color: var(--text-sec); width: 42px; height: 42px; border-radius: 10px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+    .ctrl-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .ctrl-btn:disabled { opacity: 0.32; cursor: not-allowed; }
+    .slide-counter { font-size: 17px; font-weight: 700; color: var(--text-sec); min-width: 58px; text-align: center; background: rgba(255,255,255,0.92); padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border); }
+    .dot-nav { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 200; }
+    .dot-nav-item { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+    .dot-nav-item.active { background: var(--accent); transform: scale(1.5); }
+    .help { position: fixed; bottom: 26px; left: 28px; font-size: 16px; font-weight: 500; color: var(--text-muted); z-index: 200; }
+    .help kbd { font-family: monospace; background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: 5px; padding: 1px 7px; font-size: 14px; }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+</head>
+<body>
+<div class="stage">
+  <div class="deck" id="deck">
+
+    <!-- ══════════════════════════════════
+         슬라이드 1: Executive Summary
+    ══════════════════════════════════ -->
+    <section class="slide slide-mode" role="group" aria-roledescription="slide" aria-label="슬라이드 1">
+      <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+
+        <!-- 공통 헤더 -->
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:40px;top:40px;width:24px;height:24px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-file-alt" style="color:#007BFF;font-size:20px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:74px;top:40px;width:400px;height:24px;z-index:10;display:flex;align-items:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:18px;font-weight:700;color:#333333;opacity:0.9;">프로젝트명</p>
+        </div>
+
+        <!-- 제목 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:64px;top:88px;width:800px;height:56px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;">Executive Summary</p>
+        </div>
+
+        <!-- Takeaway 1 박스 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:64px;top:172px;width:556px;height:370px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:10px;z-index:1;"></div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:188px;width:516px;height:32px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">01. 시장 점유율 급성장 및 브랜드 인지도 강화</p>
+        </div>
+        <!-- Takeaway 1 bullets -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:96px;top:234px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">전년 대비 수도권 사용자 수 150% 증가 달성</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:96px;top:272px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">타겟 연령층(2030) 브랜드 선호도 업계 1위 기록</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:96px;top:310px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">소셜 미디어 바이럴 신규 유입 비율 40% 돌파</p>
+        </div>
+
+        <!-- Takeaway 2 박스 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:660px;top:172px;width:556px;height:370px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:10px;z-index:1;"></div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:680px;top:188px;width:516px;height:32px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">02. 운영 효율화 및 서비스 품질 혁신</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:692px;top:234px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">AI 매칭 알고리즘 최적화로 대기 시간 30% 단축</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:692px;top:272px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">CS 자동화 도입, 고객 응대 만족도 95% 상회</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:692px;top:310px;width:500px;height:26px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#444444;line-height:1.5;">파트너사 온보딩 디지털화로 등록 소요 기간 단축</p>
+        </div>
+
+        <!-- Final Conclusion -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:64px;top:574px;width:1152px;height:100px;background:#EEF2FF;border:1px solid #D0E2FF;border-radius:10px;z-index:1;"></div>
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:96px;top:574px;width:44px;height:100px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-check-circle" style="color:#007BFF;font-size:28px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:156px;top:574px;width:1044px;height:100px;z-index:10;display:flex;align-items:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:700;color:#007BFF;">결론: 공격적인 인프라 확장과 차별화된 사용자 경험을 통해 시장 지배력을 공고히 함</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         슬라이드 2: Three Trends
+    ══════════════════════════════════ -->
+    <section class="slide slide-mode" role="group" aria-roledescription="slide" aria-label="슬라이드 2">
+      <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+
+        <!-- 공통 헤더 -->
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:40px;top:40px;width:24px;height:24px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-chart-line" style="color:#007BFF;font-size:20px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:74px;top:40px;width:400px;height:24px;z-index:10;display:flex;align-items:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:18px;font-weight:700;color:#333333;opacity:0.9;">프로젝트명</p>
+        </div>
+
+        <!-- 제목 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:0;top:88px;width:1280px;height:56px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;text-align:center;">Market Trends 2026</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:0;top:150px;width:1280px;height:28px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:500;color:#007BFF;text-align:center;">올해 주목해야 할 핵심 트렌드 3가지</p>
+        </div>
+
+        <!-- 카드 1 (비강조) -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:64px;top:196px;width:360px;height:466px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:16px;z-index:1;"></div>
+        <!-- 아이콘 원 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:204px;top:228px;width:80px;height:80px;background:#EEF2FF;border-radius:50%;z-index:2;"></div>
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:204px;top:228px;width:80px;height:80px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-robot" style="color:#007BFF;font-size:32px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:74px;top:328px;width:340px;height:36px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:22px;font-weight:700;color:#333333;text-align:center;">Hyper-Personalization</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:88px;top:382px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">AI 기반 개별 맞춤 콘텐츠</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:88px;top:418px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">실시간 맥락 인식 서비스</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:88px;top:454px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">예측형 사용자 UI/UX 제공</p>
+        </div>
+
+        <!-- 카드 2 (강조 — 파란 테두리) -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:460px;top:196px;width:360px;height:466px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:16px;z-index:1;"></div>
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:600px;top:228px;width:80px;height:80px;background:#EEF2FF;border-radius:50%;z-index:2;"></div>
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:600px;top:228px;width:80px;height:80px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-leaf" style="color:#007BFF;font-size:32px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:470px;top:328px;width:340px;height:36px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:22px;font-weight:700;color:#333333;text-align:center;">Green Technology</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:484px;top:382px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">친환경 탄소 중립 물류망</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:484px;top:418px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">지속 가능한 패키징 솔루션</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:484px;top:454px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">에너지 효율 최적화 시스템</p>
+        </div>
+
+        <!-- 카드 3 (비강조) -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:856px;top:196px;width:360px;height:466px;background:#F8F9FA;border:1px solid #E0E0E0;border-radius:16px;z-index:1;"></div>
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:996px;top:228px;width:80px;height:80px;background:#EEF2FF;border-radius:50%;z-index:2;"></div>
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:996px;top:228px;width:80px;height:80px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-network-wired" style="color:#007BFF;font-size:32px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:866px;top:328px;width:340px;height:36px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:22px;font-weight:700;color:#333333;text-align:center;">Hybrid Ecosystem</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:880px;top:382px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">온/오프라인 채널 통합</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:880px;top:418px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">이종 산업 간 데이터 결합</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:880px;top:454px;width:312px;height:24px;z-index:10;display:flex;align-items:center;gap:8px;">
+            <div style="width:6px;height:6px;background:#007BFF;border-radius:50%;flex-shrink:0;"></div>
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#555555;">심리스한 서비스 이동 경험</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         슬라이드 3: Two Column Compare
+    ══════════════════════════════════ -->
+    <section class="slide slide-mode" role="group" aria-roledescription="slide" aria-label="슬라이드 3">
+      <div class="slide-container" style="position:relative;width:1280px;height:720px;overflow:hidden;background:#FFFFFF;">
+
+        <!-- 공통 헤더 -->
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:40px;top:40px;width:24px;height:24px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-exchange-alt" style="color:#007BFF;font-size:20px;"></i>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:74px;top:40px;width:400px;height:24px;z-index:10;display:flex;align-items:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:18px;font-weight:700;color:#333333;opacity:0.9;">프로젝트명</p>
+        </div>
+
+        <!-- 제목 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:64px;top:88px;width:900px;height:56px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:48px;font-weight:900;color:#333333;letter-spacing:-1px;">Business Transformation</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:64px;top:150px;width:700px;height:28px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:500;color:#555555;">기존 프로세스의 혁신적인 변화와 성과</p>
+        </div>
+
+        <!-- AS-IS 패널 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:64px;top:192px;width:524px;height:490px;background:#F2F4F7;border:1px solid #D1D5DB;border-radius:12px;z-index:1;"></div>
+        <!-- AS-IS 헤더 배지 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:84px;top:216px;width:100px;height:32px;background:#D1D5DB;border-radius:6px;z-index:2;"></div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:216px;width:100px;height:32px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;color:#444444;letter-spacing:1px;">AS-IS</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:264px;width:484px;height:44px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:28px;font-weight:700;color:#333333;letter-spacing:-0.5px;">분절된 수동 운영 체계</p>
+        </div>
+        <!-- AS-IS 구분선 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:84px;top:318px;width:484px;height:1px;background:#D1D5DB;z-index:2;"></div>
+        <!-- AS-IS 아이템 1 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:334px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#444444;">파편화된 데이터 관리</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:360px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#777777;">엑셀 기반 수동 입력으로 인한 휴먼 에러 발생</p>
+        </div>
+        <!-- AS-IS 아이템 2 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:396px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#444444;">반복적인 단순 업무</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:422px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#777777;">중복 확인 및 서류 처리에 과도한 시간 소요</p>
+        </div>
+        <!-- AS-IS 아이템 3 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:458px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#444444;">낮은 가시성</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:84px;top:484px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#777777;">실시간 현황 파악 불가로 의사결정 지연</p>
+        </div>
+
+        <!-- 중앙 화살표 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:607px;top:383px;width:66px;height:66px;background:#007BFF;border-radius:50%;z-index:2;"></div>
+        <div data-object="true" data-object-type="icon"
+            style="position:absolute;left:607px;top:383px;width:66px;height:66px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-arrow-right" style="color:#FFFFFF;font-size:28px;"></i>
+        </div>
+
+        <!-- TO-BE 패널 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:692px;top:192px;width:524px;height:490px;background:#FFFFFF;border:2px solid #007BFF;border-radius:12px;box-shadow:0 8px 24px rgba(0,123,255,0.12);z-index:1;"></div>
+        <!-- TO-BE 헤더 배지 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:712px;top:216px;width:100px;height:32px;background:#007BFF;border-radius:6px;z-index:2;"></div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:216px;width:100px;height:32px;z-index:10;display:flex;align-items:center;justify-content:center;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;color:#FFFFFF;letter-spacing:1px;">TO-BE</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:264px;width:484px;height:44px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:28px;font-weight:700;color:#333333;letter-spacing:-0.5px;">통합 지능형 자동화 플랫폼</p>
+        </div>
+        <!-- TO-BE 구분선 -->
+        <div data-object="true" data-object-type="shape"
+            style="position:absolute;left:712px;top:318px;width:484px;height:1px;background:#D0E2FF;z-index:2;"></div>
+        <!-- TO-BE 아이템 1 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:334px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#007BFF;">실시간 데이터 통합</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:360px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#555555;">클라우드 기반 SSOT 구축 및 정합성 확보</p>
+        </div>
+        <!-- TO-BE 아이템 2 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:396px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#007BFF;">워크플로우 자동화</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:422px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#555555;">RPA 도입으로 반복 업무 80% 자동화</p>
+        </div>
+        <!-- TO-BE 아이템 3 -->
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:458px;width:484px;height:24px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:700;color:#007BFF;">지능형 대시보드</p>
+        </div>
+        <div data-object="true" data-object-type="textbox"
+            style="position:absolute;left:712px;top:484px;width:484px;height:20px;z-index:10;">
+            <p style="font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#555555;">실시간 성과 추적 및 데이터 기반 전략 수립</p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" id="prev-btn" disabled>◀</button>
+  <span class="slide-counter" id="counter">–</span>
+  <button class="ctrl-btn" id="next-btn">▶</button>
+</div>
+<div class="dot-nav" id="dot-nav"></div>
+<div class="help"><kbd>← →</kbd> 이동 &nbsp; <kbd>F</kbd> 전체화면</div>
+
+<script>
+'use strict';
+const deck = document.getElementById('deck');
+function updateScale() {
+  deck.style.transform = `scale(${Math.min(window.innerWidth/1280, window.innerHeight/720)})`;
+}
+window.addEventListener('resize', updateScale); updateScale();
+
+const slides = [...document.querySelectorAll('.slide')];
+const TOTAL = slides.length;
+let current = 0, isAnimating = false;
+
+function goToSlide(nextIdx, dir) {
+  if (isAnimating) return;
+  nextIdx = Math.max(0, Math.min(nextIdx, TOTAL-1));
+  if (nextIdx === current) return;
+  isAnimating = true;
+  const from = slides[current], to = slides[nextIdx];
+  const d = dir ?? (nextIdx > current ? 1 : -1);
+  to.style.transition = 'none';
+  to.style.transform = `translateX(${d > 0 ? '100%' : '-100%'})`;
+  to.classList.add('active');
+  to.getBoundingClientRect();
+  to.style.transition = '';
+  requestAnimationFrame(() => {
+    to.style.transform = 'translateX(0)';
+    from.style.transform = `translateX(${d > 0 ? '-100%' : '100%'})`;
+  });
+  const timer = setTimeout(clean, 510);
+  from.addEventListener('transitionend', function h(e) {
+    if (e.propertyName !== 'transform') return;
+    clearTimeout(timer); clean();
+  }, { once: true });
+  function clean() {
+    from.classList.remove('active'); from.style.transform = ''; to.style.transform = '';
+    current = nextIdx; isAnimating = false; updateUI();
+  }
+}
+
+function updateUI() {
+  document.getElementById('counter').textContent = `${current+1} / ${TOTAL}`;
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === TOTAL-1;
+  document.querySelectorAll('.dot-nav-item').forEach((d,i) => d.classList.toggle('active', i===current));
+}
+
+(function() {
+  const nav = document.getElementById('dot-nav');
+  slides.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot-nav-item' + (i===0?' active':'');
+    d.addEventListener('click', () => goToSlide(i, i>current?1:-1));
+    nav.appendChild(d);
+  });
+})();
+
+document.addEventListener('keydown', e => {
+  if (e.repeat) return;
+  if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); goToSlide(current+1,1); }
+  if (e.key==='ArrowLeft') { e.preventDefault(); goToSlide(current-1,-1); }
+  if (e.key==='f'||e.key==='F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+});
+document.getElementById('prev-btn').addEventListener('click', () => goToSlide(current-1,-1));
+document.getElementById('next-btn').addEventListener('click', () => goToSlide(current+1,1));
+slides[0].classList.add('active'); updateUI();
+</script>
+</body>
+</html>

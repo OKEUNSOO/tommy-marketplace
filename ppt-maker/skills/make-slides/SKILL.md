@@ -93,6 +93,9 @@ Base directory: 이 파일과 같은 디렉토리 (`skills/make-slides/`)
 | 챕터 전환, 파트 구분 | Section Divider |
 | 발표 마무리, 연락처 안내 | Thank You |
 | 명언, 핵심 메시지 강조 | Quote |
+| 전략 요약, 핵심 takeaway 2개 + 결론 | Executive Summary |
+| 트렌드 3개, 특징·옵션 3개 비교 | Three Trends |
+| AS-IS/TO-BE, 변화 전후 비교 | Two Column Compare |
 
 ### Step 4 — template.html에 슬라이드 주입
 
