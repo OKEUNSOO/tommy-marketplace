@@ -10,6 +10,7 @@ Claude Code 플러그인 모음입니다.
 |---------|------|------|
 | [`ppt-maker`](#ppt-maker) | 1.0.0 | 마크다운 → HTML 슬라이드 변환기 |
 | [`resume-designer`](#resume-designer) | 1.0.0 | 마크다운 이력서 → A4 HTML · P키 PDF 저장 |
+| [`career-toolkit`](#career-toolkit) | 1.0.0 | 이력서 맞춤화·리뷰·교정·면접 준비 올인원 |
 
 ---
 
@@ -96,6 +97,46 @@ resume-designer/
     └── design-resume/
         ├── SKILL.md        # 스킬 정의
         └── template.html   # A4 HTML 보일러플레이트
+```
+
+---
+
+## career-toolkit
+
+취업 준비 **올인원 툴킷** — 이력서 맞춤화부터 면접 준비까지 한 플러그인으로.
+
+### 스킬 목록
+
+| 스킬 | 설명 |
+|------|------|
+| `/tailor-resume` | JD 기반 이력서 맞춤화 — 키워드 정렬, 경험 재구성, 갭 분석 |
+| `/review-resume` | 이력서 종합 리뷰 — 10가지 기준 평가, 구체적 개선안 |
+| `/proofread` | 문법·논리·흐름 교정 — 원문 보존하며 핀포인트 수정 |
+| `/interview-prep` | 면접 준비 코치 — JD 분석, STAR 답변 연습, 자기소개 설계 |
+
+### 사용법
+
+```
+/tailor-resume 이력서.md JD.md     # 이력서 + JD 동시 입력
+/review-resume 이력서.md           # 이력서 단독 리뷰
+/proofread 자기소개서.md           # 교정
+/interview-prep                    # 면접 준비 (모드 선택 안내)
+/interview-prep 자기소개           # 1분 자기소개 설계
+/interview-prep STAR [경험 내용]   # STAR 답변 구조화
+/interview-prep 모의면접           # 모의면접 진행
+```
+
+### 구조
+
+```
+career-toolkit/
+├── .claude-plugin/
+│   └── plugin.json
+└── skills/
+    ├── tailor-resume/SKILL.md
+    ├── review-resume/SKILL.md
+    ├── proofread/SKILL.md
+    └── interview-prep/SKILL.md
 ```
 
 ---

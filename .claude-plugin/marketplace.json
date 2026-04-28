@@ -26,6 +26,17 @@
         "email": "jade.ok.story@gmail.com"
       },
       "category": "productivity"
+    },
+    {
+      "name": "career-toolkit",
+      "source": "./career-toolkit",
+      "description": "취업 준비 올인원 툴킷 — 이력서 맞춤화, 리뷰, 교정, 면접 준비",
+      "version": "1.0.0",
+      "author": {
+        "name": "tommy",
+        "email": "jade.ok.story@gmail.com"
+      },
+      "category": "productivity"
     }
   ]
 }
