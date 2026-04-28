@@ -4,17 +4,5 @@
   "version": "1.0.0",
   "author": {
     "name": "tommy"
-  },
-  "skills": [
-    {
-      "name": "make-slides",
-      "source": "./skills/make-slides",
-      "description": "마크다운 기획서를 1280×720 캔버스 기반 HTML 슬라이드로 변환. 키보드 네비게이션·PDF 내보내기 내장"
-    },
-    {
-      "name": "plan-slides",
-      "source": "./skills/plan-slides",
-      "description": "인터뷰 방식으로 발표 목적·청중·핵심 메시지를 파악한 뒤 슬라이드 구성을 제안하고 ppt.md 파일을 생성"
-    }
-  ]
+  }
 }
