@@ -1,4 +1,5 @@
 ---
+name: tailor-resume
 description: JD 기반 이력서 맞춤화 — 키워드 정렬, 경험 재구성, 갭 분석
 argument-hint: "[이력서 파일/텍스트] + [JD 파일/URL/텍스트]"
 ---

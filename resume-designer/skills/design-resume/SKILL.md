@@ -1,4 +1,5 @@
 ---
+name: design-resume
 description: 마크다운 이력서를 A4 HTML로 변환. 브라우저에서 P키로 PDF 저장
 argument-hint: [이력서.md 경로 또는 내용]
 ---

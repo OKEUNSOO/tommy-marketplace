@@ -1,4 +1,5 @@
 ---
+name: proofread
 description: 문법·논리·흐름 교정 — 원문 보존하며 핀포인트 수정
 argument-hint: "<교정할 텍스트 또는 파일 경로>"
 ---

@@ -1,4 +1,5 @@
 ---
+name: interview-prep
 description: 면접 준비 코치 — JD 분석, 예상 질문, STAR 답변 연습, 자기소개 설계
 argument-hint: "[회사명/JD] 또는 [면접 유형: 행동/기술/컬처핏]"
 ---

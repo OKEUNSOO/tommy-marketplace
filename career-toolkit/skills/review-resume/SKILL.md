@@ -1,4 +1,5 @@
 ---
+name: review-resume
 description: 이력서 종합 리뷰 — 10가지 기준 평가, 구체적 개선안 제시
 argument-hint: "(이력서 텍스트 붙여넣기 또는 파일 경로)"
 ---

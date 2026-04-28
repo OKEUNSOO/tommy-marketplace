@@ -4,12 +4,5 @@
   "version": "1.0.0",
   "author": {
     "name": "tommy"
-  },
-  "skills": [
-    {
-      "name": "design-resume",
-      "source": "./skills/design-resume",
-      "description": "마크다운 이력서를 A4 HTML로 변환. 키보드 P키 PDF 내보내기 내장"
-    }
-  ]
+  }
 }
