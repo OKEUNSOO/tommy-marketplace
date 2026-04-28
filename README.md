@@ -9,6 +9,7 @@ Claude Code 플러그인 모음입니다.
 | 플러그인 | 버전 | 설명 |
 |---------|------|------|
 | [`ppt-maker`](#ppt-maker) | 1.0.0 | 마크다운 → HTML 슬라이드 변환기 |
+| [`resume-designer`](#resume-designer) | 1.0.0 | 마크다운 이력서 → A4 HTML · P키 PDF 저장 |
 
 ---
 
@@ -64,6 +65,37 @@ ppt-maker/
         ├── SKILL.md        # 스킬 정의
         ├── template.html   # HTML 보일러플레이트
         └── components.md   # 레이아웃 컴포넌트 라이브러리
+```
+
+---
+
+## resume-designer
+
+마크다운 이력서를 **A4 인쇄 최적화 단일 HTML 파일**로 변환합니다.
+
+### 사용법
+
+```
+/design-resume                  # 현재 디렉토리의 이력서.md 변환
+/design-resume my-resume.md     # 특정 파일 지정
+```
+
+### 출력
+
+- 단일 `resume.html` (서버 불필요, 브라우저로 바로 열기)
+- `P` PDF 저장 (브라우저 인쇄 다이얼로그)
+- A4 세로 · Noto Sans KR · 포인트컬러 #2563a8
+
+### 구조
+
+```
+resume-designer/
+├── .claude-plugin/
+│   └── plugin.json
+└── skills/
+    └── design-resume/
+        ├── SKILL.md        # 스킬 정의
+        └── template.html   # A4 HTML 보일러플레이트
 ```
 
 ---

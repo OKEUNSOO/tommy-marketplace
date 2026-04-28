@@ -15,6 +15,17 @@
         "email": "jade.ok.story@gmail.com"
       },
       "category": "productivity"
+    },
+    {
+      "name": "resume-designer",
+      "source": "./resume-designer",
+      "description": "마크다운 이력서를 A4 인쇄 최적화 HTML로 변환. 브라우저에서 P키로 PDF 저장",
+      "version": "1.0.0",
+      "author": {
+        "name": "tommy",
+        "email": "jade.ok.story@gmail.com"
+      },
+      "category": "productivity"
     }
   ]
 }

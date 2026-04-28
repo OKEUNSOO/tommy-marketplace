@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이력서</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { margin: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 10pt;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.35;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 7mm 13mm;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    /* ── 헤더 ── */
+    .header { margin-bottom: 8px; }
+
+    .header h1 {
+      font-size: 24pt;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 24px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #444;
+    }
+
+    .contact-grid a { color: #2563a8; text-decoration: none; }
+
+    .header-divider {
+      border: none;
+      border-top: 2px solid #2563a8;
+      margin: 8px 0 0 0;
+    }
+
+    /* ── 섹션 ── */
+    .section { margin-top: 8px; }
+
+    .section-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #2563a8;
+      margin-bottom: 5px;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2563a8;
+      margin: 10px 0;
+    }
+
+    .title-divider {
+      border: none;
+      border-top: 1px solid #2563a8;
+      margin: 10px 0;
+    }
+
+    .intro-divider {
+      border: none;
+      border-top: 1px solid #2563a8;
+      margin: 8px 0 0 0;
+    }
+
+    /* ── 경험 항목 ── */
+    .item { margin-bottom: 5px; }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1px;
+    }
+
+    .item-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .item-date {
+      font-size: 8.5pt;
+      color: #555;
+      white-space: nowrap;
+      margin-left: 12px;
+    }
+
+    .item-subtitle {
+      font-size: 8pt;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    /* ── 불릿 ── */
+    ul.bullets {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 3px;
+    }
+
+    ul.bullets > li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 2px;
+      font-size: 10pt;
+      color: #1a1a1a;
+    }
+
+    ul.bullets > li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #1a1a1a;
+    }
+
+    ul.bullets > li > ul {
+      list-style: none;
+      padding-left: 12px;
+      margin-top: 1px;
+    }
+
+    ul.bullets > li > ul > li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 1px;
+      font-size: 10pt;
+      color: #333;
+    }
+
+    ul.bullets > li > ul > li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #1a1a1a;
+    }
+
+    strong.highlight { font-weight: 700; }
+
+    /* ── 스킬 ── */
+    .skill-group { margin-bottom: 4px; }
+
+    .intro-text {
+      font-size: 10pt;
+      color: #1a1a1a;
+      line-height: 1.45;
+      margin-bottom: 4px;
+    }
+
+    .item-title-light {
+      font-size: 10pt;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .skill-group-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+
+    .page-secondary { padding: 7mm 13mm; }
+    .page-secondary .section { margin-top: 8px; }
+    .page-secondary .section-title { font-size: 14pt; margin-bottom: 6px; }
+    .page-secondary .item { margin-bottom: 6px; }
+    .page-secondary ul.bullets > li { line-height: 1.4; margin-bottom: 2px; }
+    .page-secondary .skill-group { margin-bottom: 5px; }
+
+    /* ── 인쇄 ── */
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; width: 210mm; min-height: 297mm; }
+      a { color: #2563a8 !important; }
+      .pdf-hint { display: none; }
+    }
+
+    /* ── PDF 힌트 (화면 전용) ── */
+    .pdf-hint {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: #2563a8;
+      color: #fff;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PAGE 1 — 경험 / 프로젝트
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <h1><!-- 이름 --></h1>
+    <div class="contact-grid">
+      <!-- 연락처 항목들 (span 또는 a 태그) -->
+    </div>
+    <hr class="header-divider" />
+  </div>
+
+  <!-- 요약 / 자기소개 (선택) -->
+  <div class="section">
+    <div class="section-title">자기소개</div>
+    <p class="intro-text"><!-- 요약 내용 --></p>
+  </div>
+  <hr class="intro-divider" />
+
+  <!-- 경험 -->
+  <div class="section">
+    <div class="section-title">경험</div>
+    <hr class="title-divider" />
+
+    <!-- 경험 항목 반복 -->
+    <div class="item">
+      <div class="item-header">
+        <span class="item-title"><!-- 직책/회사 --></span>
+        <span class="item-date"><!-- 기간 --></span>
+      </div>
+      <div class="item-subtitle"><!-- 부제 (선택) --></div>
+      <ul class="bullets">
+        <li><!-- 불릿 내용 --></li>
+      </ul>
+    </div>
+    <hr class="section-divider" />
+
+  </div>
+
+  <!-- 프로젝트 (경험과 같은 구조, 필요시 추가) -->
+
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PAGE 2 — 스킬 / 수상 / 교육 / 학력
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page page-secondary">
+
+  <!-- 스킬 -->
+  <div class="section">
+    <div class="section-title">스킬</div>
+    <hr class="title-divider" />
+    <div class="skill-group">
+      <div class="skill-group-title"><!-- 카테고리 --></div>
+      <ul class="bullets">
+        <li><!-- 내용 --></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 수상 및 자격증 -->
+  <div class="section">
+    <div class="section-title">수상 및 자격증</div>
+    <hr class="title-divider" />
+    <div class="item">
+      <div class="item-header">
+        <span class="item-title-light"><!-- 수상명 --></span>
+        <span class="item-date"><!-- 날짜 --></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 교육 -->
+  <div class="section">
+    <div class="section-title">교육</div>
+    <hr class="title-divider" />
+    <div class="item">
+      <div class="item-header">
+        <span class="item-title-light"><!-- 교육명 --></span>
+        <span class="item-date"><!-- 기간 --></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 학력 -->
+  <div class="section">
+    <div class="section-title">학력</div>
+    <hr class="title-divider" />
+    <div class="item">
+      <div class="item-header">
+        <span class="item-title-light"><!-- 학교명 --></span>
+        <span class="item-date"><!-- 기간 --></span>
+      </div>
+      <div class="item-subtitle"><!-- 학과 | 졸업 여부 --></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PDF 힌트 -->
+<div class="pdf-hint">P키 → PDF 저장</div>
+
+<script>
+  document.addEventListener('keydown', e => {
+    if (e.key === 'p' || e.key === 'P') window.print();
+  });
+</script>
+
+</body>
+</html>
