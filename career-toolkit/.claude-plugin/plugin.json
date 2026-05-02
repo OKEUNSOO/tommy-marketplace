@@ -1,7 +1,7 @@
 {
   "name": "career-toolkit",
-  "description": "취업 준비 올인원 툴킷 — 이력서 맞춤화, 이력서 리뷰, 교정, 면접 준비",
-  "version": "1.0.0",
+  "description": "한국어 커리어 지원 워크플로우 툴킷 — JD 파싱, 경험 DB, 적합도 분석, 서류 작성, 회사 조사, 면접 준비",
+  "version": "2.0.0",
   "author": {
     "name": "tommy"
   }
